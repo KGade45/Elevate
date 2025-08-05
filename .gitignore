@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Xcode user-specific files
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
+
+# Xcode workspace shared data (safe to ignore)
+Elevate.xcodeproj/project.xcworkspace/xcuserdata/
+Elevate.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# Build products
+DerivedData/
+build/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# CocoaPods (optional — if used)
+Pods/
+Podfile.lock
+
+# Environment files
+*.env
+*.key
