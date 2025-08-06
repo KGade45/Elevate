@@ -8,17 +8,47 @@
 
 /* Begin PBXBuildFile section */
 		3A72AD162E41DC3F0076A442 /* ElevateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD152E41DC3F0076A442 /* ElevateApp.swift */; };
-		3A72AD182E41DC3F0076A442 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD172E41DC3F0076A442 /* ContentView.swift */; };
 		3A72AD1A2E41DC410076A442 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A72AD192E41DC410076A442 /* Assets.xcassets */; };
 		3A72AD1D2E41DC410076A442 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A72AD1C2E41DC410076A442 /* Preview Assets.xcassets */; };
+		3A72AD252E41E38F0076A442 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD242E41E38E0076A442 /* MainTabView.swift */; };
+		3A72AD272E41E3A80076A442 /* HomeFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD262E41E3A80076A442 /* HomeFeedView.swift */; };
+		3A72AD292E41E3EC0076A442 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD282E41E3EC0076A442 /* AccountView.swift */; };
+		3A72AD2E2E41E53A0076A442 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD2D2E41E53A0076A442 /* NotificationsView.swift */; };
+		3A72AD302E41E6710076A442 /* MyNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD2F2E41E6710076A442 /* MyNetworkView.swift */; };
+		3A72AD332E41E7080076A442 /* SinglePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD322E41E7080076A442 /* SinglePostView.swift */; };
+		3A72AD352E41FA9F0076A442 /* PostActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD342E41FA9F0076A442 /* PostActionsView.swift */; };
+		3A72AD372E41FE580076A442 /* NetworkRequestListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD362E41FE580076A442 /* NetworkRequestListCell.swift */; };
+		3A72AD3A2E4201E70076A442 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD392E4201E70076A442 /* ButtonView.swift */; };
+		3A72AD3C2E42083D0076A442 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD3B2E42083D0076A442 /* UserModel.swift */; };
+		3A72AD3E2E420F360076A442 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD3D2E420F360076A442 /* PostModel.swift */; };
+		3A72AD402E420FBE0076A442 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD3F2E420FBE0076A442 /* CommentModel.swift */; };
+		3A72AD422E4214A60076A442 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD412E4214A60076A442 /* UserMock.swift */; };
+		3A72AD442E4214F10076A442 /* PostMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD432E4214F10076A442 /* PostMock.swift */; };
+		3A72AD462E4215010076A442 /* CommentMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD452E4215010076A442 /* CommentMock.swift */; };
+		3A72AD492E421BA70076A442 /* AccountTopCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72AD482E421BA70076A442 /* AccountTopCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3A72AD122E41DC3F0076A442 /* Elevate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elevate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A72AD152E41DC3F0076A442 /* ElevateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevateApp.swift; sourceTree = "<group>"; };
-		3A72AD172E41DC3F0076A442 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3A72AD192E41DC410076A442 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A72AD1C2E41DC410076A442 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3A72AD242E41E38E0076A442 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		3A72AD262E41E3A80076A442 /* HomeFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedView.swift; sourceTree = "<group>"; };
+		3A72AD282E41E3EC0076A442 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		3A72AD2D2E41E53A0076A442 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		3A72AD2F2E41E6710076A442 /* MyNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNetworkView.swift; sourceTree = "<group>"; };
+		3A72AD322E41E7080076A442 /* SinglePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePostView.swift; sourceTree = "<group>"; };
+		3A72AD342E41FA9F0076A442 /* PostActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionsView.swift; sourceTree = "<group>"; };
+		3A72AD362E41FE580076A442 /* NetworkRequestListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestListCell.swift; sourceTree = "<group>"; };
+		3A72AD392E4201E70076A442 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		3A72AD3B2E42083D0076A442 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		3A72AD3D2E420F360076A442 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		3A72AD3F2E420FBE0076A442 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
+		3A72AD412E4214A60076A442 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
+		3A72AD432E4214F10076A442 /* PostMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMock.swift; sourceTree = "<group>"; };
+		3A72AD452E4215010076A442 /* CommentMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentMock.swift; sourceTree = "<group>"; };
+		3A72AD482E421BA70076A442 /* AccountTopCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTopCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +81,10 @@
 		3A72AD142E41DC3F0076A442 /* Elevate */ = {
 			isa = PBXGroup;
 			children = (
+				3A72AD2B2E41E4EE0076A442 /* MockData */,
+				3A72AD2A2E41E4E70076A442 /* Models */,
+				3A72AD232E41E3760076A442 /* Views */,
 				3A72AD152E41DC3F0076A442 /* ElevateApp.swift */,
-				3A72AD172E41DC3F0076A442 /* ContentView.swift */,
 				3A72AD192E41DC410076A442 /* Assets.xcassets */,
 				3A72AD1B2E41DC410076A442 /* Preview Content */,
 			);
@@ -65,6 +97,75 @@
 				3A72AD1C2E41DC410076A442 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3A72AD232E41E3760076A442 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD472E421B9B0076A442 /* Account */,
+				3A72AD382E4201DE0076A442 /* Utils */,
+				3A72AD312E41E6E30076A442 /* Feed */,
+				3A72AD2C2E41E4FD0076A442 /* General */,
+				3A72AD362E41FE580076A442 /* NetworkRequestListCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3A72AD2A2E41E4E70076A442 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD3B2E42083D0076A442 /* UserModel.swift */,
+				3A72AD3D2E420F360076A442 /* PostModel.swift */,
+				3A72AD3F2E420FBE0076A442 /* CommentModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3A72AD2B2E41E4EE0076A442 /* MockData */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD412E4214A60076A442 /* UserMock.swift */,
+				3A72AD432E4214F10076A442 /* PostMock.swift */,
+				3A72AD452E4215010076A442 /* CommentMock.swift */,
+			);
+			path = MockData;
+			sourceTree = "<group>";
+		};
+		3A72AD2C2E41E4FD0076A442 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD242E41E38E0076A442 /* MainTabView.swift */,
+				3A72AD262E41E3A80076A442 /* HomeFeedView.swift */,
+				3A72AD282E41E3EC0076A442 /* AccountView.swift */,
+				3A72AD2D2E41E53A0076A442 /* NotificationsView.swift */,
+				3A72AD2F2E41E6710076A442 /* MyNetworkView.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		3A72AD312E41E6E30076A442 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD322E41E7080076A442 /* SinglePostView.swift */,
+				3A72AD342E41FA9F0076A442 /* PostActionsView.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		3A72AD382E4201DE0076A442 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD392E4201E70076A442 /* ButtonView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3A72AD472E421B9B0076A442 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				3A72AD482E421BA70076A442 /* AccountTopCardView.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +238,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A72AD182E41DC3F0076A442 /* ContentView.swift in Sources */,
+				3A72AD2E2E41E53A0076A442 /* NotificationsView.swift in Sources */,
+				3A72AD442E4214F10076A442 /* PostMock.swift in Sources */,
+				3A72AD272E41E3A80076A442 /* HomeFeedView.swift in Sources */,
+				3A72AD492E421BA70076A442 /* AccountTopCardView.swift in Sources */,
+				3A72AD352E41FA9F0076A442 /* PostActionsView.swift in Sources */,
+				3A72AD3E2E420F360076A442 /* PostModel.swift in Sources */,
+				3A72AD422E4214A60076A442 /* UserMock.swift in Sources */,
+				3A72AD292E41E3EC0076A442 /* AccountView.swift in Sources */,
+				3A72AD402E420FBE0076A442 /* CommentModel.swift in Sources */,
 				3A72AD162E41DC3F0076A442 /* ElevateApp.swift in Sources */,
+				3A72AD462E4215010076A442 /* CommentMock.swift in Sources */,
+				3A72AD3A2E4201E70076A442 /* ButtonView.swift in Sources */,
+				3A72AD372E41FE580076A442 /* NetworkRequestListCell.swift in Sources */,
+				3A72AD252E41E38F0076A442 /* MainTabView.swift in Sources */,
+				3A72AD302E41E6710076A442 /* MyNetworkView.swift in Sources */,
+				3A72AD332E41E7080076A442 /* SinglePostView.swift in Sources */,
+				3A72AD3C2E42083D0076A442 /* UserModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
