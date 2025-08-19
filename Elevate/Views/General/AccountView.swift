@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct AccountView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: Appwrite
 
     var body: some View {
         VStack {
 //            EnterOTPView()
             Button {
-                authViewModel.signOut()
+                Task {
+                    try await authViewModel.onLogout()
+                }
             } label: {
                 Text("sign out")
             }

@@ -11,7 +11,7 @@ struct OnboardingView: View {
     @EnvironmentObject var router: Router
     @State private var password = ""
     @State private var email = ""
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: Appwrite
 
     var body: some View {
         VStack(spacing: 24) {
@@ -49,7 +49,7 @@ struct OnboardingView: View {
 
             Button(action: {
                 Task {
-                    await authViewModel.login(email: email, password: password)
+                    try await authViewModel.onLogin(email, password)
                 }
             }) {
                 Text("Log in")
@@ -109,5 +109,5 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView()
-        .environmentObject(AuthViewModel())
+        .environmentObject(Appwrite())
 }

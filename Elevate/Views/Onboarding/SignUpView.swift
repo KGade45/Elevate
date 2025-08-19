@@ -17,7 +17,7 @@ struct SignUpView: View {
     @State private var profilePicData: Data?
     @State private var showImagePicker: Bool = false
     @State private var photoItem: PhotosPickerItem?
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: Appwrite
     let appwrite = Appwrite()
     
     var body: some View {
@@ -136,5 +136,5 @@ struct SignUpView: View {
 
 #Preview {
     SignUpView()
-        .environmentObject(AuthViewModel())
+        .environmentObject(Appwrite())
 }

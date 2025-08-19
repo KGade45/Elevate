@@ -8,19 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: Appwrite
     var body: some View {
-//        if authViewModel.userSession == nil {
+        if authViewModel.userSession == nil {
             OnboardingView()
-                .environmentObject(authViewModel)
-//        } else {
-//            MainTabView()
-//                .environmentObject(authViewModel)
-//        }
+        } else {
+            MainTabView()
+        }
     }
 }
 
 #Preview {
     ContentView()
-        .environmentObject(AuthViewModel())
+        .environmentObject(Appwrite())
 }

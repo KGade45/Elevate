@@ -12,11 +12,7 @@ import Appwrite
 struct ElevateApp: App {
 
     @ObservedObject private var router = Router()
-    @StateObject var authViewModel = AuthViewModel()
-
-    let appwriteClient = Client()
-        .setEndpoint("https://[YOUR-APPWRITE-ENDPOINT]/v1")
-        .setProject("YOUR-APPWRITE-PROJECT-ID")
+    @StateObject var authViewModel = Appwrite()
 
     var body: some Scene {
         WindowGroup {

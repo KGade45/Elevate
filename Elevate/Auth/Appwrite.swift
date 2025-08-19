@@ -9,14 +9,18 @@ import Foundation
 import Appwrite
 import JSONCodable
 
-class Appwrite {
+@MainActor
+class Appwrite: ObservableObject {
     var client: Client
     var account: Account
+    @Published var currentUser: User<[String: AnyCodable]>?
+    @Published var userSession: Session?
+    @Published var isError: Bool = false
 
     public init() {
         self.client = Client()
-            .setEndpoint("https://fra.cloud.appwrite.io/v1")
-            .setProject("68a3378b0022d6172a6b")
+            .setEndpoint(Constants.endPoint)
+            .setProject(Constants.projectId)
         
         self.account = Account(client)
     }
@@ -36,13 +40,17 @@ class Appwrite {
         _ email: String,
         _ password: String
     ) async throws -> Session {
-        try await account.createEmailPasswordSession(
+        userSession = try await account.createEmailPasswordSession(
             email: email,
             password: password
         )
+        currentUser = try await account.get()
+        return userSession!
     }
 
     public func onLogout() async throws {
+        userSession = nil
+        currentUser = nil
         _ = try await account.deleteSession(
             sessionId: "current"
         )

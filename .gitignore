@@ -25,3 +25,4 @@ Podfile.lock
 # Environment files
 *.env
 *.key
+Elevate/Auth/Constants.swift

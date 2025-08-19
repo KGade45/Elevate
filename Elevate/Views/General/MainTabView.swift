@@ -10,7 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     @State private var searchUser: String = ""
     @EnvironmentObject var router: Router
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: Appwrite
     
     var body: some View {
         ZStack {
