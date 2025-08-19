@@ -23,6 +23,9 @@ class Appwrite: ObservableObject {
             .setProject(Constants.projectId)
         
         self.account = Account(client)
+        Task {
+            await self.loadSession()
+        }
     }
 
     public func onRegister(
@@ -54,6 +57,15 @@ class Appwrite: ObservableObject {
         _ = try await account.deleteSession(
             sessionId: "current"
         )
+    }
+
+    public func loadSession() async {
+        do {
+            currentUser = try await account.get()
+            userSession = try await account.getSession(sessionId: "current")
+        } catch {
+            userSession = nil
+        }
     }
 }
 
