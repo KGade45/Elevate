@@ -67,5 +67,32 @@ class Appwrite: ObservableObject {
             userSession = nil
         }
     }
+
+    public func updateUserInfo(userPrefs: [String: Any]) async {
+        do {
+            // 1. Fetch current user
+            let currentUser = try await account.get()
+            // 2. Get existing prefs
+            let currentPrefs = currentUser.prefs.data
+
+            var newPrefs: [String: Any] = [:]
+            for (key, value) in currentPrefs {
+                newPrefs[key] = value.value
+            }
+
+            // 3. Merge current and new preferences
+            newPrefs = newPrefs.merging(userPrefs) { (current, _) in current }
+
+            // 4. Update preferences
+            _ = try await account.updatePrefs(
+                prefs: newPrefs
+            )
+            // 5. Refresh user info
+            self.currentUser = try await account.get()
+        } catch {
+            isError = true
+            print("Error updating user info: \(error)")
+        }
+    }
 }
 
