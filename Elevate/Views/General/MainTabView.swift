@@ -52,6 +52,19 @@ struct MainTabView: View {
                         .background(Color(.systemGray5))
                         .cornerRadius(10)
                     
+                    // Navigation button (no redundant Button inside)
+                    NavigationLink {
+                        AddPostView()
+                    } label: {
+                        Image(systemName: "plus.circle")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundStyle(.black)
+                    }
+                    .simultaneousGesture(TapGesture().onEnded {
+                        print("Plus tapped")
+                    })
+
+                    // Regular button
                     Button(action: {
                         print("Messages tapped")
                     }) {
