@@ -11,6 +11,7 @@ import PhotosUI
 struct AddPostView: View {
     @StateObject private var viewModel = PhotoPickerViewModel()
     @State private var caption: String = ""
+    private let imageService = ImageService()
     
     var body: some View {
         NavigationView {
@@ -61,7 +62,12 @@ struct AddPostView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Post") {
-                        print("Post submitted")
+                        Task {
+                            await imageService.uploadImage(image: viewModel.selectedImage!) { url in
+                                print("Error this is button")
+                            }
+                            print("Uploaded image this is button")
+                        }
                     }
                     .font(.system(size: 16, weight: .semibold))
                 }

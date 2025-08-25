@@ -8,16 +8,16 @@
 import Foundation
 
 struct PostMock {
-    static let post = Post(
+    static let post = Posts(
         id: "post1",
         postedById: "u1",
         caption: "Check out this view!",
         imageUrl: "https://picsum.photos/300/200",
         likes: [UserMock.jane, UserMock.emily],
-        comments: [CommentMock.comment1, CommentMock.comment2]
+        comments: [CommentsMock.comment1, CommentsMock.comment2]
     )
-    static let posts: [Post] = {
-        var allPosts: [Post] = []
+    static let posts: [Posts] = {
+        var allPosts: [Posts] = []
         let captions = [
             "Exploring the mountains 🏔",
             "Sunset vibes 🌅",
@@ -42,13 +42,13 @@ struct PostMock {
         ]
 
         for i in 1...20 {
-            let post = Post(
+            let post = Posts(
                 id: "post\(i)",
                 postedById: "u1",
                 caption: captions.randomElement(),
                 imageUrl: "https://picsum.photos/id/\(100 + i)/300/200",
                 likes: [UserMock.jane, UserMock.emily],
-                comments: [CommentMock.comment1, CommentMock.comment2]
+                comments: [CommentsMock.comment1, CommentsMock.comment2]
             )
             allPosts.append(post)
         }

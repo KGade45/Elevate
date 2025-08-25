@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Comment: Codable, Identifiable {
+class Comments: Codable, Identifiable {
     let commentedBy: UserModel
     let commentCaption: String
 
@@ -15,4 +15,14 @@ class Comment: Codable, Identifiable {
         self.commentedBy = commentedBy
         self.commentCaption = commentCaption
     }
+}
+
+import Foundation
+
+struct Comment: Codable, Identifiable {
+    let id: String
+    let postId: String
+    let userId: String
+    let content: String
+    let createdAt: Date
 }

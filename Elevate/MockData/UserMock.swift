@@ -35,7 +35,7 @@ struct UserMock {
     static let john = UserModel(
         id: "u1",
         name: "John Doe",
-        friends: [jane.uid, emily.uid],
+        friends: nil,
         about: "iOS Developer from SF.",
         postsIds: ["post1"]
     )

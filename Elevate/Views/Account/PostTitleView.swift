@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostTitleView: View {
 
-    var post: Post
+    var post: Posts
     var body: some View {
         VStack {
             Image("Nature")
