@@ -14,18 +14,14 @@ public class ImageService {
     var storage: Storage
 
     init() {
-        self.client = Client()
-            .setEndpoint(Constants.endPoint)
-            .setProject(Constants.projectId)
-        
+        self.client = AppwriteClient.shared.client
         self.storage = Storage(client)
     }
 
-    func uploadImage(image: UIImage, completion: @escaping (String?) -> Void) async {
+    func uploadImage(image: UIImage) async -> String? {
 
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            completion(nil)
-            return
+            return nil
         }
 
         do {
@@ -34,9 +30,10 @@ public class ImageService {
                 fileId: ID.unique(),
                 file: InputFile.fromData(imageData, filename: "post.jpg", mimeType: "image/jpeg")
             )
-            print("File uploaded: \(file)")
+            return file.id
         } catch {
             print("Upload failed: \(error.localizedDescription)")
+            return nil
         }
     }
 }

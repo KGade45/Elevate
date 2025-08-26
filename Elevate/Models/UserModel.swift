@@ -10,13 +10,13 @@ import Foundation
 struct UserModel: Codable {
     let uid: String
     var name: String
-    var profilePhotoUrl: URL?
+    var profilePhotoId: String?
     var friends: [String]?
     var about: String?
     var postsIds: [String]?
     var email: String
 
-    init(id: String = "u100", name: String = "", profilePhotoUrl: URL? = nil, friends: [String]? = nil, about: String? = nil, postsIds: [String]? = nil, email: String = "") {
+    init(id: String = "u100", name: String = "", profilePhotoId: String? = nil, friends: [String]? = nil, about: String? = nil, postsIds: [String]? = nil, email: String = "") {
         self.uid = id
         self.name = name
         self.friends = friends

@@ -9,10 +9,11 @@ import SwiftUI
 import PhotosUI
 
 struct AddPostView: View {
-    @StateObject private var viewModel = PhotoPickerViewModel()
+    @StateObject private var photoPickerViewModel = PhotoPickerViewModel()
     @State private var caption: String = ""
-    private let imageService = ImageService()
-    
+    private let postSerview = PostsService()
+    @EnvironmentObject var authViewModel: Appwrite
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -28,7 +29,7 @@ struct AddPostView: View {
                         .padding(.horizontal)
                     
                     // MARK: - Selected Image Preview
-                    if let image = viewModel.selectedImage {
+                    if let image = photoPickerViewModel.selectedImage {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
@@ -39,7 +40,7 @@ struct AddPostView: View {
                     }
                     
                     // MARK: - Add Image Button
-                    PhotosPicker(selection: $viewModel.imageSelection, matching: .images) {
+                    PhotosPicker(selection: $photoPickerViewModel.imageSelection, matching: .images) {
                         HStack {
                             Image(systemName: "photo.fill.on.rectangle.fill")
                             Text("Choose from Gallery")
@@ -63,9 +64,8 @@ struct AddPostView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Post") {
                         Task {
-                            await imageService.uploadImage(image: viewModel.selectedImage!) { url in
-                                print("Error this is button")
-                            }
+                            guard let userId = authViewModel.currentUser?.id else {return}
+                            try await postSerview.createPost(userId: userId, caption: caption, image: photoPickerViewModel.selectedImage)
                             print("Uploaded image this is button")
                         }
                     }

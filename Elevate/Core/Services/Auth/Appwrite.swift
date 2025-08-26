@@ -18,10 +18,7 @@ class Appwrite: ObservableObject {
     @Published var isError: Bool = false
 
     public init() {
-        self.client = Client()
-            .setEndpoint(Constants.endPoint)
-            .setProject(Constants.projectId)
-        
+        self.client = AppwriteClient.shared.client
         self.account = Account(client)
         Task {
             await self.loadSession()
@@ -30,13 +27,21 @@ class Appwrite: ObservableObject {
 
     public func onRegister(
         _ email: String,
-        _ password: String
+        _ password: String,
+        _ name: String
     ) async throws -> User<[String: AnyCodable]> {
-        try await account.create(
+        _ = try await account.create(
             userId: ID.unique(),
+            email: email,
+            password: password,
+            name: name
+        )
+        userSession = try await account.createEmailPasswordSession(
             email: email,
             password: password
         )
+        currentUser = try await account.get()
+        return currentUser!
     }
 
     public func onLogin(

@@ -14,32 +14,30 @@ struct SignUpView: View {
     @State private var fullName = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var profilePicData: Data?
-    @State private var showImagePicker: Bool = false
-    @State private var photoItem: PhotosPickerItem?
+    @StateObject private var photoPickerViewModel = PhotoPickerViewModel()
     @EnvironmentObject var authViewModel: Appwrite
-    let appwrite = Appwrite()
+    let imageService = ImageService()
     
     var body: some View {
         VStack(spacing: 24) {
             
-            ZStack {
-                if let profilePicData, let image = UIImage(data: profilePicData) {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                } else {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.gray.opacity(0.6))
+            PhotosPicker(selection: $photoPickerViewModel.imageSelection, matching: .images) {
+                ZStack {
+                    // Display the selected image from the ViewModel
+                    if let image = photoPickerViewModel.selectedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(.gray.opacity(0.6))
+                    }
                 }
-            }
-            .frame(width: 100, height: 100)
-            .background(Circle().stroke(Color.gray.opacity(0.3), lineWidth: 2))
-            .clipShape(Circle())
-            .onTapGesture {
-                showImagePicker.toggle()
+                .frame(width: 100, height: 100)
+                .background(Circle().stroke(Color.gray.opacity(0.3), lineWidth: 2))
+                .clipShape(Circle())
             }
             .padding(.top, 40)
             
@@ -103,8 +101,21 @@ struct SignUpView: View {
             ) {
                 Task {
                     do {
-                        let user = try await appwrite.onRegister(email, password)
+                        let user = try await authViewModel.onRegister(email, password, fullName)
                         print("Successfully registered user: \(user.email)")
+
+                        let defaultImage = UIImage(systemName: "person.crop.circle.fill")!
+                        let imageToUpload = photoPickerViewModel.selectedImage ?? defaultImage
+                        
+                        let photoId = await imageService.uploadImage(image: imageToUpload)
+                        
+                        if let photoId = photoId {
+                            await authViewModel.updateUserInfo(userPrefs: ["profilePhotoId": photoId])
+                            print("Successfully updated profile photo.")
+                        } else {
+                            print("Warning: Photo upload failed. Profile photo ID not updated.")
+                        }
+                        
                     } catch {
                         print("Error during registration: \(error.localizedDescription)")
                     }
@@ -116,16 +127,6 @@ struct SignUpView: View {
         .padding(.bottom, 40)
         .navigationTitle("Sign Up")
         .ignoresSafeArea(.keyboard)
-        .photosPicker(isPresented: $showImagePicker, selection: $photoItem, matching: .images)
-        .onChange(of: photoItem) { newItem in
-            if let newItem {
-                Task {
-                    if let data = try await newItem.loadTransferable(type: Data.self) {
-                        self.profilePicData = data
-                    }
-                }
-            }
-        }
     }
 
     var isValidPassword: Bool {
