@@ -31,7 +31,18 @@ struct Post: Codable, Identifiable {
     let id: String
     let userId: String
     let caption: String?
-    let imageUrl: String?
-    var likes: [String]
-    let createdAt: Date
+    let imageId: String
+    let likesCount: Int
+    let commentsCount: Int
+    let createdAt: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case userId
+        case caption
+        case imageId
+        case likesCount
+        case commentsCount
+        case createdAt
+    }
 }

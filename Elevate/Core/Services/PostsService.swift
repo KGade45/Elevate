@@ -8,7 +8,7 @@
 import Appwrite
 import Foundation
 import SwiftUI
-
+import JSONCodable
 public class PostsService {
     var client: Client
     var database: Databases
@@ -44,13 +44,65 @@ public class PostsService {
             print("Error creating post: \(error.localizedDescription)")
         }
     }
+
+    func getPost(userId: String) async throws -> [Post] {
+        var posts: [Post] = []
+
+        do {
+            let documentList = try await database.listDocuments(
+                databaseId: Constants.databaseId,
+                collectionId: Constants.postCollectionId,
+                queries: [Query.equal("userId", value: userId)]
+            )
+            
+            for document in documentList.documents {
+                // Create a dictionary to unwraps the AnyCodable values
+                var unwrappedData: [String: Any] = [:]
+                for (key, value) in document.data {
+                    if let anyCodableValue = value as? AnyCodable {
+                        unwrappedData[key] = anyCodableValue.value
+                    } else {
+                        unwrappedData[key] = value
+                    }
+                }
+
+                let jsonData = try JSONSerialization.data(withJSONObject: unwrappedData)
+                let post = try JSONDecoder().decode(Post.self, from: jsonData)
+                posts.append(post)
+            }
+        } catch {
+            print("Error getting posts: \(error.localizedDescription)")
+            throw error
+        }
+
+        return posts
+    }
 }
 
-struct NewPost {
+struct Connection: Codable {
+    let followerId: String
+    let followingId: String
+
+    init() {
+        self.followerId = "68aff99f8d1912ed9de2"
+        self.followingId = "68b058beb73a7e42a96a"
+    }
+}
+struct NewPost: Codable {
     let userId: String
     let caption: String
-    let likesCount: Int = 0
-    let commentsCount: Int = 0
+    let likesCount: Int
+    let commentsCount: Int
     let createdAt: String
     let imageId: String?
+
+    init(userId: String, caption: String, createdAt: String, imageId: String?) {
+        self.userId = userId
+        self.caption = caption
+        self.createdAt = createdAt
+        self.imageId = imageId
+        self.likesCount = 0
+        self.commentsCount = 0
+    }
 }
+

@@ -36,4 +36,24 @@ public class ImageService {
             return nil
         }
     }
+
+    func getImage(fileId: String) async -> UIImage? {
+        do {
+            let byteBuffer = try await storage.getFileDownload(
+                bucketId: Constants.storageBucketId,
+                fileId: fileId
+            )
+
+            // Convert ByteBuffer → Data
+            var buffer = byteBuffer
+            if let bytes = buffer.readBytes(length: buffer.readableBytes) {
+                let data = Data(bytes)
+                return UIImage(data: data)
+            }
+        } catch {
+            print("Error loading image:", error.localizedDescription)
+        }
+        return nil
+    }
+
 }

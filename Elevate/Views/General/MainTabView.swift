@@ -41,7 +41,6 @@ struct MainTabView: View {
                         Image(systemName: "person")
                         Text("Account")
                     }
-                    .environmentObject(authViewModel)
             }
         }
         .toolbar {
@@ -52,19 +51,14 @@ struct MainTabView: View {
                         .background(Color(.systemGray5))
                         .cornerRadius(10)
                     
-                    // Navigation button (no redundant Button inside)
-                    NavigationLink {
-                        AddPostView()
-                    } label: {
+                    Button(action: {
+                        router.navigate(to: .addPost)
+                    }) {
                         Image(systemName: "plus.circle")
                             .font(.system(size: 18, weight: .semibold))
                             .foregroundStyle(.black)
                     }
-                    .simultaneousGesture(TapGesture().onEnded {
-                        print("Plus tapped")
-                    })
 
-                    // Regular button
                     Button(action: {
                         print("Messages tapped")
                     }) {
@@ -78,12 +72,5 @@ struct MainTabView: View {
         .toolbarBackground(Color.white, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-
-struct MainTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainTabView()
     }
 }

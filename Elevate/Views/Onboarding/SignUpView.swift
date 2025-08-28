@@ -16,6 +16,7 @@ struct SignUpView: View {
     @State private var confirmPassword = ""
     @StateObject private var photoPickerViewModel = PhotoPickerViewModel()
     @EnvironmentObject var authViewModel: Appwrite
+    @EnvironmentObject var router: Router
     let imageService = ImageService()
     
     var body: some View {
@@ -115,7 +116,7 @@ struct SignUpView: View {
                         } else {
                             print("Warning: Photo upload failed. Profile photo ID not updated.")
                         }
-                        
+                        router.navigateToRoot()
                     } catch {
                         print("Error during registration: \(error.localizedDescription)")
                     }

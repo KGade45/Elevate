@@ -8,13 +8,13 @@
 import Foundation
 
 struct CommentsMock {
-    static let comment1 = Comments(
-        commentedBy: UserMock.emily,
-        commentCaption: "This is so cool!"
-    )
-
-    static let comment2 = Comments(
-        commentedBy: UserMock.mark,
-        commentCaption: "Nice post!"
-    )
+//    static let comment1 = Comments(
+//        commentedBy: UserMock.emily,
+//        commentCaption: "This is so cool!"
+//    )
+//
+//    static let comment2 = Comments(
+//        commentedBy: UserMock.mark,
+//        commentCaption: "Nice post!"
+//    )
 }

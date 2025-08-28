@@ -84,16 +84,18 @@ struct OnboardingView: View {
                     router.navigate(to: .loginwithGoogle)
                 }
                 
-                NavigationLink {
-                    SignUpView()
-                        .environmentObject(authViewModel)
-                } label: {
-                    Text("Dont have account?")
+                HStack {
+                    Text("Don't have an account?")
                         .foregroundStyle(.black)
-                    Text("Sign Up")
-                        .foregroundStyle(Color(.systemBlue))
+                    
+                    Button(action: {
+                        router.navigate(to: .signUp)
+                    }) {
+                        Text("Sign Up")
+                            .foregroundStyle(Color(.systemBlue))
+                    }
+                    .fontWeight(.medium)
                 }
-                .fontWeight(.medium)
             }
             .padding(.bottom, 30)
         }

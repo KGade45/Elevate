@@ -22,8 +22,8 @@ struct ElevateApp: App {
                         switch destination {
                         case .loginwithEmail: MainTabView()
                         case .loginwithGoogle: MainTabView()
-                        case .loginwithPhone: MainTabView()
-                        case .signUp: MainTabView()
+                        case .signUp: SignUpView()
+                        case .addPost: AddPostView()
                         }
                     }
             }

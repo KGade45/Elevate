@@ -99,5 +99,16 @@ class Appwrite: ObservableObject {
             print("Error updating user info: \(error)")
         }
     }
+
+    public func getUserInfo() async -> [String: Any]? {
+        do {
+            let prefs = try await account.getPrefs()
+            return prefs.data
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
 }
 

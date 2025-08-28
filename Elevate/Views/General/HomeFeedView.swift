@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeFeedView: View {
+    var followerService = FollowersService()
+
     var body: some View {
         ZStack{
             Color.gray.opacity(0.1)
@@ -18,6 +20,16 @@ struct HomeFeedView: View {
                 SinglePostView()
                 SinglePostView()
             }
+        }
+        .onAppear {
+            Task {
+                do {
+                    try await followerService.getFollowing()
+                } catch {
+                    print("Failed to fetch posts: \(error)")
+                }
+            }
+            
         }
     }
 }

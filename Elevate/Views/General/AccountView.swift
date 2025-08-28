@@ -12,7 +12,7 @@ struct AccountView: View {
 
     var body: some View {
         VStack {
-//            EnterOTPView()
+            AccountMainView()
             Button {
                 Task {
                     try await authViewModel.onLogout()

@@ -9,21 +9,38 @@ import SwiftUI
 
 struct PostTitleView: View {
 
-    var post: Posts
+    var post: Post
+    let imageService = ImageService()
+    @State private var uiImage: UIImage? = nil
+
     var body: some View {
         VStack {
-            Image("Nature")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 130)
-                .clipped()
+            if let uiImage = uiImage {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 130)
+                    .clipped()
+            } else {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 100, height: 130)
+                    .overlay(
+                        ProgressView()
+                    )
+            }
+        }
+        .task {
+            await loadImage()
         }
         .padding()
     }
-}
-
-struct PostTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostTitleView(post: PostMock.post)
+    
+    private func loadImage() async {
+        do {
+            if let image = await imageService.getImage(fileId: post.imageId) {
+                uiImage = image
+            }
+        }
     }
 }

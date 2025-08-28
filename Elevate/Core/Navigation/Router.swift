@@ -13,9 +13,9 @@ final class Router: ObservableObject {
 
     enum AuthFlow: Hashable, Codable {
         case loginwithGoogle
-        case loginwithPhone
         case loginwithEmail
         case signUp
+        case addPost
     }
 
     func navigate(to destination: AuthFlow) {
