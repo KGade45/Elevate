@@ -8,11 +8,33 @@
 import SwiftUI
 import PhotosUI
 
+@MainActor
+class AddPostViewModel: ObservableObject {
+    @Published var caption: String = ""
+    @Published var isLoading: Bool = false
+    
+    private var postService = PostsService()
+    
+    func createPost(userId: String, image: UIImage?) async throws {
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            try await postService.createPost(userId: userId, caption: caption, image: image)
+            caption = ""
+        } catch {
+            print("Error creating post: \(error.localizedDescription)")
+            throw error
+        }
+    }
+}
+
 struct AddPostView: View {
     @StateObject private var photoPickerViewModel = PhotoPickerViewModel()
-    @State private var caption: String = ""
-    private let postSerview = PostsService()
+    @StateObject private var viewModel = AddPostViewModel()
+    
     @EnvironmentObject var authViewModel: Appwrite
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationView {
@@ -20,7 +42,7 @@ struct AddPostView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     
                     // MARK: - Caption Input
-                    TextField("What's on your mind?", text: $caption, axis: .vertical)
+                    TextField("What's on your mind?", text: $viewModel.caption, axis: .vertical)
                         .padding()
                         .frame(maxWidth: .infinity, minHeight: 80, alignment: .topLeading)
                         .background(Color(.systemGray6))
@@ -61,15 +83,24 @@ struct AddPostView: View {
             .navigationTitle("Create Post")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Post") {
                         Task {
-                            guard let userId = authViewModel.currentUser?.id else {return}
-                            try await postSerview.createPost(userId: userId, caption: caption, image: photoPickerViewModel.selectedImage)
-                            print("Uploaded image this is button")
+                            guard let userId = authViewModel.currentUser?.id else { return }
+                            do {
+                                try await viewModel.createPost(userId: userId, image: photoPickerViewModel.selectedImage)
+                                dismiss()
+                            } catch {}
                         }
                     }
                     .font(.system(size: 16, weight: .semibold))
+                    .opacity(viewModel.isLoading ? 0.5 : 1.0)
+                    .disabled(viewModel.isLoading)
                 }
             }
         }

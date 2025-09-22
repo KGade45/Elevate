@@ -33,22 +33,97 @@ class FollowersService {
         }
     }
 
-    func getFollowing() async throws {
-        var followings: [UserModel] = []
+    func getFollowing() async throws -> [UserModel] {
+            var followings: [UserModel] = []
+
+            do {
+                // Step 1: Fetch ALL documents from the follow collection without a query.
+                // This is confirmed to work based on your previous debugging.
+                let followDocuments = try await database.listDocuments(
+                    databaseId: Constants.databaseId,
+                    collectionId: Constants.followCollectionId
+                )
+                
+                // Step 2: Manually filter the documents on the client side.
+                // This bypasses the problematic Query.equal.
+                let filteredFollows = followDocuments.documents.filter { doc in
+                    if let followerIdFromDB = doc.data["followerId"]?.value as? String {
+                        return followerIdFromDB == authViewModel.currentUser?.id ?? ""
+                    }
+                    return false
+                }
+                
+                // Step 3: Iterate through the now-filtered documents.
+                for document in filteredFollows {
+                    if let followingId = document.data["followingId"]?.value as? String {
+                        let userDoc = try await database.getDocument(
+                            databaseId: Constants.databaseId,
+                            collectionId: "user",
+                            documentId: followingId
+                        )
+                        
+                        var userDocData = userDoc.data
+                        
+                        // Corrected line: Assign the ID directly to the key.
+                        // The SDK automatically handles the AnyCodable wrapper.
+                        userDocData["$id"] = AnyCodable(userDoc.id)
+                        
+                        var cleanedData: [String: Any] = [:]
+                        for (key, value) in userDocData {
+                            cleanedData[key] = value.value
+                        }
+                        
+                        // Now, convert the cleaned dictionary to Data
+                        let jsonData = try JSONSerialization.data(withJSONObject: cleanedData, options: [])
+                        
+                        // Finally, decode the Data into your model
+                        let user = try JSONDecoder().decode(UserModel.self, from: jsonData)
+                        followings.append(user)
+                    }
+                }
+                return followings
+            } catch {
+                print("Error fetching followings: \(error.localizedDescription)")
+                throw error // Re-throw the error for the ViewModel to handle.
+            }
+        }
+
+    func debugFollowerID() async {
+        // This is a temporary function for debugging purposes only
+        guard let currentUserId = authViewModel.currentUser?.id else {
+            print("User is not authenticated.")
+            return
+        }
+        
+        // Replace with a known document ID from your Appwrite database
+        let knownDocumentId = "68d17e5e03733fe59f27"
+        
         do {
-            let documents = try await database.listDocuments(
+            let document = try await database.getDocument(
                 databaseId: Constants.databaseId,
                 collectionId: Constants.followCollectionId,
-                queries: [Query.equal("followerId", value: authViewModel.currentUser?.id ?? "")]
+                documentId: knownDocumentId
             )
-            for document in documents.documents {
-                let followId = document.data["followingId"]?.value as? String
+            
+            // Extract the followerId from the retrieved document
+            if let followerIdFromDB = document.data["followerId"]?.value as? String {
+                print("--- String Comparison Debug ---")
+                print("1. User ID (from app): '\(currentUserId)'")
+                print("2. DB ID (from fetched doc): '\(followerIdFromDB)'")
                 
-                // TODO: - create a users table tobe able to fetch all the users
+                if currentUserId == followerIdFromDB {
+                    print("Result: IDs are an EXACT match. The Query.equal call should have worked.")
+                } else {
+                    print("Result: IDs DO NOT match. There is a hidden difference.")
+                    print("Length of User ID: \(currentUserId.count)")
+                    print("Length of DB ID: \(followerIdFromDB.count)")
+                }
+                print("------------------------------")
+            } else {
+                print("Error: Could not find 'followerId' in the document or it's not a String.")
             }
-            print(followings)
         } catch {
-            print("Error fetching posts: \(error.localizedDescription)")
+            print("Error fetching known document: \(error)")
         }
     }
 }

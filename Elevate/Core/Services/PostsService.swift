@@ -84,8 +84,8 @@ struct Connection: Codable {
     let followingId: String
 
     init() {
-        self.followerId = "68aff99f8d1912ed9de2"
-        self.followingId = "68b058beb73a7e42a96a"
+        self.followerId = "68d17009af5888d8e86d"
+        self.followingId = "68d17dc8659a780929e6"
     }
 }
 struct NewPost: Codable {

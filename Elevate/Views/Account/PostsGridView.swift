@@ -34,9 +34,3 @@ struct PostsGridView: View {
         }
     }
 }
-
-struct PostsGridView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostsGridView()
-    }
-}

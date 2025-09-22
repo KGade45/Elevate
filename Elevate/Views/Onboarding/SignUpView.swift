@@ -1,31 +1,83 @@
 //
-//  SignUpView.swift
-//  Elevate
+//  SignUpView.swift
+//  Elevate
 //
-//  Created by Kaustubh kailas gade on 18/08/25.
+//  Created by Kaustubh kailas gade on 18/08/25.
 //
 
 import SwiftUI
 import PhotosUI
 
-struct SignUpView: View {
+// MARK: - ViewModel
+@MainActor
+class SignUpViewModel: ObservableObject {
+    @Published var email = ""
+    @Published var fullName = ""
+    @Published var password = ""
+    @Published var confirmPassword = ""
+    @Published var photoPickerViewModel = PhotoPickerViewModel()
+    @Published var isLoading = false
+    @Published var showAlert = false
+    @Published var alertMessage = ""
     
-    @State private var email = ""
-    @State private var fullName = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
-    @StateObject private var photoPickerViewModel = PhotoPickerViewModel()
+    private let imageService = ImageService()
+    
+    var isValidPassword: Bool {
+        guard !password.isEmpty else { return false }
+        return password == confirmPassword
+    }
+    
+    func signUp(authViewModel: Appwrite, router: Router) async {
+        guard isValidPassword else {
+            alertMessage = "Passwords do not match."
+            showAlert = true
+            return
+        }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            // 1. Register the user with Appwrite
+            let user = try await authViewModel.onRegister(email, password, fullName)
+            
+            // 2. Handle profile photo upload
+            if let imageToUpload = photoPickerViewModel.selectedImage {
+                let photoId = await imageService.uploadImage(image: imageToUpload)
+                
+                // 3. Update the user's profile with the new photo ID
+                if let photoId = photoId {
+                    await authViewModel.updateUserInfo(userPrefs: ["profilePhotoId": photoId])
+                    print("Successfully updated profile photo.")
+                } else {
+                    print("Warning: Photo upload failed. Profile photo ID not updated.")
+                }
+            }
+            
+            // 4. Navigate to the main app screen
+            router.navigateToRoot()
+            
+        } catch {
+            alertMessage = error.localizedDescription
+            showAlert = true
+            print("Error during registration: \(error.localizedDescription)")
+        }
+    }
+}
+
+
+// MARK: - View
+struct SignUpView: View {
+    @StateObject private var viewModel = SignUpViewModel()
     @EnvironmentObject var authViewModel: Appwrite
     @EnvironmentObject var router: Router
-    let imageService = ImageService()
     
     var body: some View {
         VStack(spacing: 24) {
             
-            PhotosPicker(selection: $photoPickerViewModel.imageSelection, matching: .images) {
+            PhotosPicker(selection: $viewModel.photoPickerViewModel.imageSelection, matching: .images) {
                 ZStack {
-                    // Display the selected image from the ViewModel
-                    if let image = photoPickerViewModel.selectedImage {
+                    if let image = viewModel.photoPickerViewModel.selectedImage {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
@@ -58,13 +110,13 @@ struct SignUpView: View {
             
             // Form Fields
             Group {
-                CustomTextField(placeholder: "Full Name", text: $fullName, shouldShowBox: true)
-                CustomTextField(placeholder: "Email", text: $email, shouldShowBox: true)
+                CustomTextField(placeholder: "Full Name", text: $viewModel.fullName, shouldShowBox: true)
+                CustomTextField(placeholder: "Email", text: $viewModel.email, shouldShowBox: true)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
-                CustomTextField(placeholder: "Password", text: $password, isSecureTextField: true, shouldShowBox: true)
+                CustomTextField(placeholder: "Password", text: $viewModel.password, isSecureTextField: true, shouldShowBox: true)
                     .textContentType(.newPassword)
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
@@ -74,7 +126,7 @@ struct SignUpView: View {
             ZStack(alignment: .trailing) {
                 CustomTextField(
                     placeholder: "Confirm Password",
-                    text: $confirmPassword,
+                    text: $viewModel.confirmPassword,
                     isSecureTextField: true,
                     shouldShowBox: true
                 )
@@ -82,9 +134,9 @@ struct SignUpView: View {
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 
-                if !password.isEmpty && !confirmPassword.isEmpty {
-                    Image(systemName: isValidPassword ? "checkmark.circle.fill" : "xmark.circle.fill")
-                        .foregroundColor(isValidPassword ? .green : .red)
+                if !viewModel.password.isEmpty && !viewModel.confirmPassword.isEmpty {
+                    Image(systemName: viewModel.isValidPassword ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        .foregroundColor(viewModel.isValidPassword ? .green : .red)
                         .padding(.trailing, 10)
                         .transition(.scale)
                 }
@@ -101,38 +153,20 @@ struct SignUpView: View {
                 fontWeight: .semibold
             ) {
                 Task {
-                    do {
-                        let user = try await authViewModel.onRegister(email, password, fullName)
-                        print("Successfully registered user: \(user.email)")
-
-                        let defaultImage = UIImage(systemName: "person.crop.circle.fill")!
-                        let imageToUpload = photoPickerViewModel.selectedImage ?? defaultImage
-                        
-                        let photoId = await imageService.uploadImage(image: imageToUpload)
-                        
-                        if let photoId = photoId {
-                            await authViewModel.updateUserInfo(userPrefs: ["profilePhotoId": photoId])
-                            print("Successfully updated profile photo.")
-                        } else {
-                            print("Warning: Photo upload failed. Profile photo ID not updated.")
-                        }
-                        router.navigateToRoot()
-                    } catch {
-                        print("Error during registration: \(error.localizedDescription)")
-                    }
+                    await viewModel.signUp(authViewModel: authViewModel, router: router)
                 }
             }
             .clipShape(Capsule())
+            .disabled(viewModel.isLoading)
+            .opacity(viewModel.isLoading ? 0.5 : 1.0)
         }
         .padding(.horizontal)
         .padding(.bottom, 40)
         .navigationTitle("Sign Up")
         .ignoresSafeArea(.keyboard)
-    }
-
-    var isValidPassword: Bool {
-        guard !password.isEmpty else { return false }
-        return password == confirmPassword
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(title: Text("Sign Up Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
 
