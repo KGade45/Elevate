@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeFeedView: View {
     var followerService = FollowersService()
     private let authViewModel = Appwrite()
+    private let postService = PostsService()
 
     var body: some View {
         ZStack{
@@ -25,7 +26,9 @@ struct HomeFeedView: View {
         .onAppear {
             Task {
                 do {
-                    _ = try await followerService.getFollowing()
+                    let users = try await followerService.getFollowing()
+                    let posts = try await postService.getPost(userId: users.first?.id ?? "")
+                    print(posts)
                 } catch {
                     print("Failed to fetch posts: \(error)")
                 }

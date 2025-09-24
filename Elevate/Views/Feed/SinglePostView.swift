@@ -11,25 +11,13 @@ struct SinglePostView: View {
     var body: some View {
         ZStack {
             VStack {
-                HStack {
-                    Image(systemName: "person")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 25)
-                    Text("UserModel name")
-                        .padding(.leading, 10)
-                        .fontWeight(.bold)
-                }
+                PostActorView()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
                 Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
                     .foregroundStyle(.black)
                     .padding(.horizontal)
-                Image("Nature")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: 300)
+                PostImageView()
                 PostActionsView()
                     .frame(maxWidth: .infinity)
             }

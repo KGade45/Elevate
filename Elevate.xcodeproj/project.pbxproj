@@ -47,6 +47,9 @@
 		BB2426C72E56215700BADD52 /* AnyCodable in Frameworks */ = {isa = PBXBuildFile; productRef = BB2426C62E56215700BADD52 /* AnyCodable */; };
 		BB4274AC2E5CB1A600A70C3D /* Follows.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4274AB2E5CB1A600A70C3D /* Follows.swift */; };
 		BB4274B02E5CB5F300A70C3D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4274AF2E5CB5F300A70C3D /* ImageService.swift */; };
+		BB5A21F72E845FD30077D437 /* PostActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A21F62E845FD30077D437 /* PostActorView.swift */; };
+		BB5A21F92E8460730077D437 /* HeartLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A21F82E8460730077D437 /* HeartLikeView.swift */; };
+		BB5A21FB2E84670A0077D437 /* PostImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A21FA2E84670A0077D437 /* PostImageView.swift */; };
 		BB5E349D2E577100000F447A /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E349B2E577100000F447A /* NotificationsView.swift */; };
 		BB5E349E2E577100000F447A /* SingleNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E349C2E577100000F447A /* SingleNotificationView.swift */; };
 		BB5E34A12E57741E000F447A /* AddPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E34A02E57741E000F447A /* AddPostView.swift */; };
@@ -106,6 +109,9 @@
 		3AABDA652E45DC130081D146 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		BB4274AB2E5CB1A600A70C3D /* Follows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follows.swift; sourceTree = "<group>"; };
 		BB4274AF2E5CB5F300A70C3D /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		BB5A21F62E845FD30077D437 /* PostActorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActorView.swift; sourceTree = "<group>"; };
+		BB5A21F82E8460730077D437 /* HeartLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartLikeView.swift; sourceTree = "<group>"; };
+		BB5A21FA2E84670A0077D437 /* PostImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageView.swift; sourceTree = "<group>"; };
 		BB5E349B2E577100000F447A /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		BB5E349C2E577100000F447A /* SingleNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNotificationView.swift; sourceTree = "<group>"; };
 		BB5E34A02E57741E000F447A /* AddPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostView.swift; sourceTree = "<group>"; };
@@ -233,8 +239,11 @@
 			children = (
 				3A72AD4C2E432E400076A442 /* Comment */,
 				3A72AD322E41E7080076A442 /* SinglePostView.swift */,
+				BB5A21FA2E84670A0077D437 /* PostImageView.swift */,
+				BB5A21F62E845FD30077D437 /* PostActorView.swift */,
 				3A72AD342E41FA9F0076A442 /* PostActionsView.swift */,
 				3A72AD512E43341E0076A442 /* SharePostBottomsheet.swift */,
+				BB5A21F82E8460730077D437 /* HeartLikeView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -465,8 +474,10 @@
 				3A72AD502E432E780076A442 /* CommentsView.swift in Sources */,
 				3A72AD4B2E432C340076A442 /* CommentBottomsheet.swift in Sources */,
 				3A72AD5F2E435ED50076A442 /* PostTitleView.swift in Sources */,
+				BB5A21F92E8460730077D437 /* HeartLikeView.swift in Sources */,
 				BB643B2E2E5302DD0005546F /* Router.swift in Sources */,
 				3A72AD272E41E3A80076A442 /* HomeFeedView.swift in Sources */,
+				BB5A21F72E845FD30077D437 /* PostActorView.swift in Sources */,
 				BB643B342E5324A50005546F /* View+Ext.swift in Sources */,
 				3A26686B2E4609F600B8D946 /* EmailVerifyView.swift in Sources */,
 				3A72AD592E4355E20076A442 /* AccountMainView.swift in Sources */,
@@ -475,6 +486,7 @@
 				BB79BE6D2E5DEB7500F26937 /* PostsService.swift in Sources */,
 				3A72AD3E2E420F360076A442 /* PostModel.swift in Sources */,
 				BB79BE6B2E5DE93100F26937 /* AppwriteClient.swift in Sources */,
+				BB5A21FB2E84670A0077D437 /* PostImageView.swift in Sources */,
 				3A72AD522E43341E0076A442 /* SharePostBottomsheet.swift in Sources */,
 				BB4274B02E5CB5F300A70C3D /* ImageService.swift in Sources */,
 				3A72AD422E4214A60076A442 /* UserMock.swift in Sources */,

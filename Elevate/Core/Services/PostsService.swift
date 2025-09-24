@@ -51,11 +51,17 @@ public class PostsService {
         do {
             let documentList = try await database.listDocuments(
                 databaseId: Constants.databaseId,
-                collectionId: Constants.postCollectionId,
-                queries: [Query.equal("userId", value: userId)]
+                collectionId: Constants.postCollectionId
             )
-            
-            for document in documentList.documents {
+
+            let filteredPosts = documentList.documents.filter { doc in
+                if let postIdFromDB = doc.data["userId"]?.value as? String {
+                    return postIdFromDB == userId
+                }
+                return false
+            }
+
+            for document in filteredPosts {
                 // Create a dictionary to unwraps the AnyCodable values
                 var unwrappedData: [String: Any] = [:]
                 for (key, value) in document.data {
